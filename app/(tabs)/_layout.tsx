@@ -1,5 +1,5 @@
 import {Tabs} from 'expo-router'
-import { Ionicons } from '@expo/vector-icons'
+
 import {tabs} from '@/constants/data'
 import {colors, components} from '@/constants/theme'
 import {View} from 'react-native'
@@ -79,6 +79,9 @@ const TabLayout = () => {
                     }}
                 />
             ))}
+
+            <Tabs.Screen name="subscriptions/[id]" options={{ href: null}} />   
+            {/* removed the unnecessary extra subcriptions tab */}
         </Tabs>
     )
 }
