@@ -1,5 +1,11 @@
 import {Tabs} from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
+import {tabs} from '@/constants/data'
+import {colors, components} from '@/constants/theme'
+import {View} from 'react-native'
+import {Image} from 'react-native'
+import clsx from 'clsx'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import '@/global.css'
 
 /**
@@ -19,43 +25,63 @@ import '@/global.css'
  * 3. tabBarActiveTintColor is set to the app's accent color for styling
  */
 
-const TabLayout = () => (
-    <Tabs screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: '#ea7a53', // Accent color when tab is active
-    }}>
-        <Tabs.Screen 
-            name='index' 
-            options={{
-                title: 'Home',
-                tabBarIcon: ({color}) => <Ionicons name='home' size={24} color={color} />
-            }} 
-        />
-        <Tabs.Screen 
-            name='subscriptions' 
-            options={{
-                title: 'Subscriptions',
-                tabBarIcon: ({color}) => <Ionicons name='card' size={24} color={color} />
-            }} 
-        />
-        <Tabs.Screen 
-            name='insights' 
-            options={{
-                title: 'Insights',
-                tabBarIcon: ({color}) => <Ionicons name='pie-chart' size={24} color={color} />
-            }} 
-        />
-        <Tabs.Screen 
-            name='settings' 
-            options={{
-                title: 'Settings',
-                tabBarIcon: ({color}) => <Ionicons name='settings' size={24} color={color} />
-            }} 
-        />
 
-        <Tabs.Screen name='subscriptions/[id]' options={{ href: null}} />
-    </Tabs>
-)
+const tabBar = components.tabBar;
+
+const TabLayout = () => {
+    const insets = useSafeAreaInsets();
+
+    const TabIcon = ({focused, icon}: TabIconProps) => {
+        return(
+            <View className="tabs-icon">
+                    <View className={clsx('tabs-pill', focused && 'tabs-active')}>
+                          <Image source={icon} resizeMode="contain" className="tabs-glyph"/>
+                    </View>
+            </View>
+        )
+    }
+
+    return(
+        <Tabs 
+            screenOptions={{ 
+                headerShown: false ,
+                tabBarShowLabel: false,
+                tabBarStyle: {
+                        position: 'absolute',
+                        bottom: Math.max(insets.bottom, tabBar.horizontalInset),
+                        height: tabBar.height,
+                        marginHorizontal: tabBar.horizontalInset,
+                        borderRadius: tabBar.radius,
+                        backgroundColor: colors.primary,
+                        borderTopWidth: 0,
+                        elevation: 0,
+                },
+                tabBarItemStyle: {
+                    paddingVertical: tabBar.height / 2 - tabBar.iconFrame / 1.6
+                },
+                tabBarIconStyle: {
+                    width: tabBar.iconFrame,
+                    height: tabBar.iconFrame,
+                    alignItems: 'center'
+                }   
+            }}>
+
+
+            {tabs.map((tab) => (
+                <Tabs.Screen 
+                    key={tab.name} 
+                    name={tab.name} 
+                    options={{
+                            title: tab.title,
+                            tabBarIcon: ({focused}) => (
+                                <TabIcon focused={focused} icon={tab.icon}/>
+                            )  
+                    }}
+                />
+            ))}
+        </Tabs>
+    )
+}
 
 export default TabLayout;
 
