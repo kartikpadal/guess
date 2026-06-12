@@ -52,6 +52,8 @@ const TabLayout = () => (
                 tabBarIcon: ({color}) => <Ionicons name='settings' size={24} color={color} />
             }} 
         />
+
+        <Tabs.Screen name='subscriptions/[id]' options={{ href: null}} />
     </Tabs>
 )
 
