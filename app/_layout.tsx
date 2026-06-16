@@ -11,6 +11,7 @@ export default function RootLayout() {
   // - '../' = relative path from current file location (DOESN'T WORK reliably in require())
   // - './' = current directory relative path (DOESN'T WORK reliably in require())
   // '@/' is the standard in Expo/React Native projects for absolute asset imports
+  
   const [fontsLoaded] = useFonts({
     'sans-regular': require('@/assets/fonts/PlusJakartaSans-Regular.ttf'),
     'sans-bold': require('@/assets/fonts/PlusJakartaSans-Bold.ttf'),
