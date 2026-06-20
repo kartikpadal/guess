@@ -2,12 +2,14 @@ import "@/global.css"
 import { Text, View, Image } from "react-native";
 import { Link } from "expo-router";
 import images from "@/constants/images";
-import { HOME_USER , HOME_BALANCE} from "@/constants/data";
+import { HOME_USER , HOME_BALANCE, UPCOMING_SUBSCRIPTIONS} from "@/constants/data";
 import {icons} from "@/constants/icons";
 import {formatCurrency} from"@/lib/utils";
 import dayjs from 'dayjs';
 import { SafeAreaView as RNSafeAreaView} from "react-native-safe-area-context";
 import { styled } from "nativewind";
+import ListHeading from "@/components/ListHeading";
+import UpcomingSubscriptionCard from "@/components/UpcomingSubscriptionCard";
 
 const SafeAreaView = styled(RNSafeAreaView);
  
@@ -36,8 +38,15 @@ export default function App() {
         </View>
       </View>
       
+      <View >
+          <ListHeading title="Upcoming"/>
+          <UpcomingSubscriptionCard data={ UPCOMING_SUBSCRIPTIONS[0]}/>
+      </View>
       
-      
+      <View >
+          <ListHeading title="All subscriptions"/>
+      </View>
+
     </SafeAreaView>
   );
 }
