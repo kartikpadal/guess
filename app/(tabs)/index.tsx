@@ -6,6 +6,7 @@ import { HOME_USER , HOME_BALANCE, UPCOMING_SUBSCRIPTIONS} from "@/constants/dat
 import {icons} from "@/constants/icons";
 import {formatCurrency} from"@/lib/utils";
 import dayjs from 'dayjs';
+import { FlatList } from "react-native";
 import { SafeAreaView as RNSafeAreaView} from "react-native-safe-area-context";
 import { styled } from "nativewind";
 import ListHeading from "@/components/ListHeading";
@@ -40,7 +41,19 @@ export default function App() {
       
       <View >
           <ListHeading title="Upcoming"/>
-          <UpcomingSubscriptionCard data={ UPCOMING_SUBSCRIPTIONS[0]}/>
+
+            {/* This flatlist here is used for rendering the upcoming subscriptions in a horizontal scrollable list. 
+            It takes the UPCOMING_SUBSCRIPTIONS data and maps each item to an UpcomingSubscriptionCard component, 
+            passing the item properties as props. The keyExtractor ensures each item has a unique key based on its id. 
+            If there are no upcoming subscriptions, it displays a message indicating that there are no upcoming renewals yet. */}
+          <FlatList 
+                data={UPCOMING_SUBSCRIPTIONS}
+                renderItem={({item}) => (<UpcomingSubscriptionCard {...item}/>)}
+                keyExtractor={(item) => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                ListEmptyComponent={<Text className="home-empty-state">No upcoming renewls yet.</Text>}
+          />
       </View>
       
       <View >
