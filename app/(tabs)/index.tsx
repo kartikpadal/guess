@@ -2,19 +2,24 @@ import "@/global.css"
 import { Text, View, Image } from "react-native";
 import { Link } from "expo-router";
 import images from "@/constants/images";
-import { HOME_USER , HOME_BALANCE, UPCOMING_SUBSCRIPTIONS} from "@/constants/data";
+import { HOME_USER, HOME_BALANCE, UPCOMING_SUBSCRIPTIONS, HOME_SUBSCRIPTIONS } from "@/constants/data";
 import {icons} from "@/constants/icons";
-import {formatCurrency} from"@/lib/utils";
+import {formatCurrency} from "@/lib/utils";
 import dayjs from 'dayjs';
 import { FlatList } from "react-native";
-import { SafeAreaView as RNSafeAreaView} from "react-native-safe-area-context";
-import { styled } from "nativewind";
 import ListHeading from "@/components/ListHeading";
 import UpcomingSubscriptionCard from "@/components/UpcomingSubscriptionCard";
+import SubscriptionCard from "@/components/SubscriptionCard";
+import { SafeAreaView as RNSafeAreaView} from "react-native-safe-area-context";
+import { styled } from "nativewind";
+import { useState } from "react";
+
 
 const SafeAreaView = styled(RNSafeAreaView);
  
 export default function App() {
+
+  const [expandedSubscriptionId, setExpandedSubscriptionId] = useState<string | null>(null);
   return (
     <SafeAreaView className="flex-1 bg-background p-5">
       <View className="home-header">
@@ -58,6 +63,12 @@ export default function App() {
       
       <View >
           <ListHeading title="All subscriptions"/>
+          <SubscriptionCard 
+                { ...HOME_SUBSCRIPTIONS[0]}
+                expanded={expandedSubscriptionId === HOME_SUBSCRIPTIONS[0].id}
+                onPress={() => setExpandedSubscriptionId((currentId) => currentId === HOME_SUBSCRIPTIONS[0].id
+                ?  null : HOME_SUBSCRIPTIONS[0].id)}
+          />
       </View>
 
     </SafeAreaView>
