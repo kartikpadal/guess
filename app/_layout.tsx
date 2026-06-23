@@ -4,6 +4,8 @@ import '@/global.css';
 import {useFonts} from 'expo-font';
 import {useEffect} from 'react';
 
+SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
   // Using '@/' path alias for assets:
   // - '@/' = configured path alias pointing to project root (WORKS - recommended)

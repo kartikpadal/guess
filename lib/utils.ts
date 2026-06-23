@@ -11,7 +11,7 @@ export const formatCurrency = (value: number, currency = "USD"): string => {
     } catch{
         // fallback if currency code is invalid or formatting fails
         
-        return `$${value.toFixed(2)}`;
+        return value.toFixed(2);
     }
 };
 
